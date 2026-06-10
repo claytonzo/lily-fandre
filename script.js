@@ -29,3 +29,36 @@ document.addEventListener('animationend', () => {}, { once: true });
 const style = document.createElement('style');
 style.textContent = '.visible { opacity: 1 !important; transform: none !important; }';
 document.head.appendChild(style);
+
+// Count-up animation for stat numbers
+const countObserver = new IntersectionObserver(
+  (entries) => entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    countObserver.unobserve(e.target);
+
+    const node = e.target.firstChild;          // leading text node, e.g. "1,000"
+    const raw = node.textContent;
+    const match = raw.match(/^[\d,]+(\.\d+)?/);
+    if (!match) return;
+
+    const target = parseFloat(match[0].replace(/,/g, ''));
+    const decimals = (match[0].split('.')[1] || '').length;
+    const useCommas = match[0].includes(',');
+    const suffix = raw.slice(match[0].length);
+    const duration = 1200;
+    const start = performance.now();
+
+    function tick(now) {
+      const p = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - p, 3);
+      let val = (target * eased).toFixed(decimals);
+      if (useCommas) val = Number(val).toLocaleString('en-US');
+      node.textContent = val + suffix;
+      if (p < 1) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }),
+  { threshold: 0.5 }
+);
+
+document.querySelectorAll('.stat-number').forEach(el => countObserver.observe(el));
