@@ -52,11 +52,20 @@ a { color: inherit; text-decoration: none; }
   justify-content: space-between;
 }
 
+.nav-home {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.3);
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+.nav-home:hover { color: var(--gold); }
+
 .nav-name {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 1.4rem;
   letter-spacing: 0.05em;
   color: var(--gold);
+  margin-right: auto;
 }
 
 .nav-links {
