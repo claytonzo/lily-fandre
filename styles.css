@@ -663,6 +663,18 @@ footer {
   margin-bottom: 1rem;
 }
 
+.footer-social {
+  margin-bottom: 1rem;
+}
+
+.footer-social a {
+  font-size: 0.85rem;
+  color: var(--gold-light);
+  transition: color 0.2s;
+}
+
+.footer-social a:hover { color: var(--gold); }
+
 .footer-credit {
   font-size: 0.75rem;
   color: rgba(255,255,255,0.25);
